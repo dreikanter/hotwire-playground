@@ -5,20 +5,40 @@ volumes:
   bundle:
 
 services:
-  app:
+  dev:
     build: .
+    tty: true
+    stdin_open: true
     environment:
       RAILS_ENV: development
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/hot_development
       BUNDLE_PATH: /bundle
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b 0.0.0.0"
+    command: bash -c "bundle exec ./bin/rails server -p 3000 -b 0.0.0.0"
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
       - postgres
+      - js-build
+      - css-build
     volumes:
       - .:/app
       - bundle:/bundle
+
+  js-build:
+    build: .
+    tty: true
+    stdin_open: true
+    command: bash -c "yarn build --watch"
+    volumes:
+      - .:/app
+
+  css-build:
+    build: .
+    tty: true
+    stdin_open: true
+    command: bash -c "yarn build:css --watch"
+    volumes:
+      - .:/app
 
   postgres:
     image: postgres:14
@@ -28,7 +48,7 @@ services:
       POSTGRES_USER: postgres
       PGDATA: /var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - postgres:/var/lib/postgresql/data
 

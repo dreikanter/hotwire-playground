@@ -1,24 +1,23 @@
-# README
+# Experimental Rails project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Setup:
 
-Things you may want to cover:
+```sh
+docker-compose run dev bash
 
-* Ruby version
+yarn
+bundle
+./bin/setup
+```
 
-* System dependencies
+Run server:
 
-* Configuration
+```sh
+docker-compose up dev
+```
 
-* Database creation
+See full logs:
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```sh
+docker-compose logs -f
+```
