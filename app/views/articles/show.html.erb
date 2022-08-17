@@ -1,0 +1,8 @@
+<h1>Article #<%= @article.id -%></h1>
+
+<p><%= link_to("Index", articles_path) -%> | <%= link_to("Edit", edit_article_path(@article.id)) -%></p>
+
+<p>Updated at: <%= @article.updated_at.rfc3339 -%></p>
+
+<p><%= @article.text -%></p>
+
