@@ -1,0 +1,5 @@
+<% flash.each do |type, message| %>
+  <div class="alert alert-<%= { "alert" => "danger" }.fetch(type, "info") %>" role="alert">
+    <%= message %>
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+<%= turbo_frame_tag(dom_id(article)) do %>
+  <li>
+    <b><%= article.id %></b> - <%= article.text %>
+    <%= link_to("Edit", edit_article_path(article.id)) %> |
+    <%= link_to("Drop", article_path(article.id), data: { turbo_method: :delete }) %>
+  </li>
+<% end %>

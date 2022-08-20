@@ -1,22 +1,16 @@
 <h1>Articles</h1>
 
-<p>Count: <%= @articles.count -%></p>
-
 <p>
-  <%= link_to("New", new_article_path) -%> |
   <%= link_to("Generate random article", articles_path(random: true), data: { turbo_method: :post }) -%>
 </p>
 
 <p>Recent articles:</p>
 
 <%- if @articles.any? -%>
-  <ul>
+  <ul id="list">
+    <%= turbo_stream_from "articles" %>
     <%- @articles.each do |article| -%>
-      <li>
-        <b><%= article.id -%></b> - <%= article.text -%>
-        <%= link_to("Edit", edit_article_path(article.id)) -%> |
-        <%= link_to("Drop", article_path(article.id), data: { turbo_method: :delete, turbo_confirm: "Sure?" }) -%>
-      </li>
+      <%= render(partial: "article", locals: { article: article }) -%>
     <%- end -%>
   </ul>
 <%- else -%>

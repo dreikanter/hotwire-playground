@@ -45,7 +45,7 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 # gem "sassc-rails"
 
-gem 'faker', '~> 2.22'
+gem "faker", "~> 2.22"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
