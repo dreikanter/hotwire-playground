@@ -2,7 +2,10 @@
 
 <p>Count: <%= @articles.count -%></p>
 
-<p><%= link_to "New", new_article_path -%></p>
+<p>
+  <%= link_to("New", new_article_path) -%> |
+  <%= link_to("Generate random article", articles_path(random: true), data: { turbo_method: :post }) -%>
+</p>
 
 <p>Recent articles:</p>
 

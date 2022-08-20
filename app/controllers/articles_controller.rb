@@ -21,8 +21,13 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.create!(**article_attributes)
-    redirect_to(articles_path)
+    if random?
+      @article = Article.create!(text: Faker::Company.bs.humanize)
+      redirect_to(articles_path)
+    else
+      @article = Article.create!(**article_attributes)
+      redirect_to(articles_path)
+    end
   end
 
   def destroy
@@ -31,6 +36,10 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+  def random?
+    params["random"].present?
+  end
 
   def id
     params.require("id")
