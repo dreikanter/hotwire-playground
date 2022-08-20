@@ -21,13 +21,8 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    if random?
-      @article = Article.create!(text: Faker::Company.bs.humanize)
-      redirect_to(articles_path)
-    else
-      @article = Article.create!(**article_attributes)
-      redirect_to(articles_path)
-    end
+    flash.now[:notice] = "New article created"
+    @article = Article.create!(**article_attributes)
   end
 
   def destroy
@@ -46,6 +41,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_attributes
+    return { text: Faker::Company.bs.humanize } if random?
     params.require("article").permit(:text)
   end
 end
