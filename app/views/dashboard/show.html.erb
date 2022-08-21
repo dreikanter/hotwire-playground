@@ -1,0 +1,16 @@
+<h1>Articles</h1>
+
+<p>
+  <%= link_to("Generate random article", articles_path(random: true), data: { turbo_method: :post }) -%>
+</p>
+
+<%= turbo_stream_from "articles_count" %>
+<div id="articles_count"></div>
+
+<p>Pushed content:</p>
+<%= turbo_stream_from "articles_stream" %>
+<div id="articles_list2"></div>
+
+<p>Lazy loaded content:</p>
+
+<%= turbo_frame_tag("articles_list", src: articles_path, loading: :lazy) %>

@@ -1,21 +1,11 @@
-<h1>Articles</h1>
-
-<p>
-  <%= link_to("Generate random article", articles_path(random: true), data: { turbo_method: :post }) -%>
-</p>
-
-<%= turbo_stream_from "articles_count" %>
-<div id="articles_count"></div>
-
-<p>Recent articles:</p>
-
-<%- if @articles.any? -%>
-  <ul id="list">
-    <%= turbo_stream_from "articles" %>
-    <%- @articles.each do |article| -%>
-      <%= render(partial: "article", locals: { article: article }) -%>
-    <%- end -%>
-  </ul>
-<%- else -%>
-  <p>None</p>
-<%- end -%>
+<%= turbo_frame_tag("articles_list") do %>
+  <% if @articles.any? %>
+    <ul id="list">
+      <% @articles.each do |article| %>
+        <%= render(partial: "articles/article", locals: { article: article }) %>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>None</p>
+  <% end %>
+<% end %>

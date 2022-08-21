@@ -2,3 +2,4 @@
 import * as Turbo from "@hotwired/turbo"
 import "./controllers"
 import * as bootstrap from "bootstrap"
+import "@hotwired/turbo-rails"

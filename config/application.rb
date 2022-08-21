@@ -33,5 +33,6 @@ module Hot
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.web_console.permissions = ['127.0.0.0/4', '172.0.0.0/4']
   end
 end

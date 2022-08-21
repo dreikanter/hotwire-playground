@@ -23,20 +23,13 @@ class ArticlesController < ApplicationController
   def create
     flash.now[:notice] = "New article created"
     @article = Article.create!(**article_attributes)
-    streamables = "articles_count"
-
-    attributes = {
-      target: "articles_count",
-      partial: "articles/count",
-      locals: { count: (rand * 100).to_i }
-    }
-
-    Turbo::StreamsChannel.broadcast_update_to(streamables, **attributes)
+    push_counter_update
   end
 
   def destroy
     flash.now[:alert] = "Article #{id} deleted"
     @article = Article.find(id).destroy!
+    push_counter_update
   end
 
   private
@@ -52,5 +45,17 @@ class ArticlesController < ApplicationController
   def article_attributes
     return { text: Faker::Company.bs.humanize } if random?
     params.require("article").permit(:text)
+  end
+
+  def push_counter_update
+    streamables = "articles_count"
+
+    attributes = {
+      target: "articles_count",
+      partial: "articles/count",
+      locals: { count: Article.count }
+    }
+
+    Turbo::StreamsChannel.broadcast_update_to(streamables, **attributes)
   end
 end
