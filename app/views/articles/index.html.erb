@@ -4,6 +4,9 @@
   <%= link_to("Generate random article", articles_path(random: true), data: { turbo_method: :post }) -%>
 </p>
 
+<%= turbo_stream_from "articles_count" %>
+<div id="articles_count"></div>
+
 <p>Recent articles:</p>
 
 <%- if @articles.any? -%>

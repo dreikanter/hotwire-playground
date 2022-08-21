@@ -23,6 +23,15 @@ class ArticlesController < ApplicationController
   def create
     flash.now[:notice] = "New article created"
     @article = Article.create!(**article_attributes)
+    streamables = "articles_count"
+
+    attributes = {
+      target: "articles_count",
+      partial: "articles/count",
+      locals: { count: (rand * 100).to_i }
+    }
+
+    Turbo::StreamsChannel.broadcast_update_to(streamables, **attributes)
   end
 
   def destroy
